@@ -12,11 +12,11 @@ readS   ; Save registers R1-R5 on the stack
         STR     R5, R6, #0      ; Store R5 at R6 + offset 0
 
 ; Initialize registers
-        AND     R1, R1, #0      ; Clear R1
-        AND     R2, R2, #0      ; Clear R2
-        AND     R3, R3, #0      ; Clear R3
-        AND     R4, R4, #0      ; Clear R4
-        AND     R5, R5, #0      ; Clear R5
+        AND     R1, R1, #0      ; Clear R1 through R5
+        AND     R2, R2, #0
+        AND     R3, R3, #0
+        AND     R4, R4, #0
+        AND     R5, R5, #0
 ;
 ; prints console initial output
         LEA     R0, PROMPT
@@ -113,4 +113,4 @@ endMZ   AND     R0, R0, #0
 ;
 NEWLINE .FILL x000A
 ASCII   .FILL x0030
-PROMPT  .STRINGZ "Input a 2 digit decimal number:"Hello
+PROMPT  .STRINGZ "Hello. Please input a 1-5 digit decimal number"
