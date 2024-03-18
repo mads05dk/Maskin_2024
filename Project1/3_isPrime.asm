@@ -95,12 +95,10 @@ RESTORE LDR     R3, R6, #0      ;   restore R3
         LDR     R1, R6, #0      ;   restore R1
         ADD     R6, R6, #1      ;   from the stack
         RET                     ; Return from subroutine
-
-;
-;
-; multiply function
-; R0 = first number
-; R1 = second number
+                                ;
+                                ; multiply function
+                                ; R0 = first number
+                                ; R1 = second number
 MUL     ; if R1 is 0, return R1
         ADD     R1, R1, #0      ;
         BRz     endMZ           ;
