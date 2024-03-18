@@ -3,24 +3,20 @@
 ;   input: two digits read from input I/O device
 ;   output: R0 - the decimal number
 ;
-readS   ADD     R6, R6, #-1     ;   store registers used, into the stack
-        STR     R1, R6, #0
-        ADD     R6, R6, #-1
-        STR     R2, R6, #0
-        ADD     R6, R6, #-1
-        STR     R3, R6, #0
-        ADD     R6, R6, #-1
-        STR     R4, R6, #0
-        ADD     R6, R6, #-1
-        STR     R5, R6, #0
-;
-;
-        AND     R1, R1, #0
-        AND     R2, R2, #0
-        AND     R3, R3, #0
-        AND     R4, R4, #0
-        AND     R5, R5, #0
-;
+readS   ; Save registers R1-R5 on the stack
+        ADD     R6, R6, #-5     ; Decrement stack pointer to make space for 5 registers
+        STR     R1, R6, #4      ; Store R1 at R6 + offset 4
+        STR     R2, R6, #3      ; Store R2 at R6 + offset 3
+        STR     R3, R6, #2      ; Store R3 at R6 + offset 2
+        STR     R4, R6, #1      ; Store R4 at R6 + offset 1
+        STR     R5, R6, #0      ; Store R5 at R6 + offset 0
+
+; Initialize registers
+        AND     R1, R1, #0      ; Clear R1
+        AND     R2, R2, #0      ; Clear R2
+        AND     R3, R3, #0      ; Clear R3
+        AND     R4, R4, #0      ; Clear R4
+        AND     R5, R5, #0      ; Clear R5
 ;
 ; prints console initial output
         LEA     R0, PROMPT
