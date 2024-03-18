@@ -4,33 +4,33 @@
 ;   output: R0 - the decimal number
 ;
 readS   ; Save registers R1-R5 on the stack
-        ADD     R6, R6, #-5     ; Decrement stack pointer to make space for 5 registers
-        STR     R1, R6, #4      ; Store R1 at R6 + offset 4
-        STR     R2, R6, #3      ; Store R2 at R6 + offset 3
-        STR     R3, R6, #2      ; Store R3 at R6 + offset 2
-        STR     R4, R6, #1      ; Store R4 at R6 + offset 1
-        STR     R5, R6, #0      ; Store R5 at R6 + offset 0
+        ADD     R6, R6, #-5     ;   Decrement stack pointer to make space for 5 registers
+        STR     R1, R6, #4      ;   Store R1 at R6 + offset 4
+        STR     R2, R6, #3      ;   Store R2 at R6 + offset 3
+        STR     R3, R6, #2      ;   Store R3 at R6 + offset 2
+        STR     R4, R6, #1      ;   Store R4 at R6 + offset 1
+        STR     R5, R6, #0      ;   Store R5 at R6 + offset 0
 
 ; Initialize registers
-        AND     R1, R1, #0      ; Clear R1 through R5
+        AND     R1, R1, #0      ;   Clear R1 through R5
         AND     R2, R2, #0      ;
         AND     R3, R3, #0      ;
         AND     R4, R4, #0      ;
         AND     R5, R5, #0      ;
 ;
 ; prints console initial output
-        LEA     R0, PROMPT      ;
-        TRAP    x22             ;
-        LD      R0, NEWLINE     ;
+        LEA     R0, PROMPT      ;   Load prompt string into R0
+        TRAP    x22             ;   Print to console
+        LD      R0, NEWLINE     ;   Load a newline into R0
         TRAP    x21             ;
         AND     R4, R4, #0      ;
         ADD     R4, R4, #2      ;   COUNTER
 ;
 ;
 READ    AND     R0, R0, #0      ;
-        TRAP    x23             ;   read
-        ADD     R4, R4, #-1     ;
-        BRnz    LoadR2          ;
+        TRAP    x23             ;   read input
+        ADD     R4, R4, #-1     ;   Add -1 to R4
+        BRnz    LoadR2          ;   
         ADD     R1, R0, #0      ;
         BRnzp   READ            ;
 LoadR2  ADD     R2, R0, #0      ;
@@ -64,8 +64,8 @@ LoadR2  ADD     R2, R0, #0      ;
         ADD     R6, R6, #1      ;   from the stack
 ;
 ;
-END     ADD     R0, R0, R2      ;
-        LDR     R5, R6, #0      ;   restore registers from the stack
+END     ADD     R0, R0, R2      ;   restore registers from the stack
+        LDR     R5, R6, #0      ;   
         ADD     R6, R6, #1      ;
         LDR     R4, R6, #0      ;
         ADD     R6, R6, #1      ;
