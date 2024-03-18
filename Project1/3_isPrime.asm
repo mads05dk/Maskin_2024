@@ -14,31 +14,31 @@ isPrime ; Stack preparation for saving registers
 ;
 ;
         ; Special checks for numbers less than 2 and equal to 2
-        ADD     R0, R0, #-2     ; Adjust R0 to check for value 2
-        BRz     YES             ; If R0 was 2, it's prime
-        BRn     NO              ; If less than 2, it's not prime
-        ADD     R0, R0, #2      ; Restore original R0 value
+        ADD     R0, R0, #-2     ;   Adjust R0 to check for value 2
+        BRz     YES             ;   If R0 was 2, it's prime
+        BRn     NO              ;   If less than 2, it's not prime
+        ADD     R0, R0, #2      ;   Restore original R0 value
 ;
 ;
         ; Divisibility by 2 check excluding the number 2 itself
-        AND     R2, R2, #0      ; Reset R2 for use
+        AND     R2, R2, #0      ;   Reset R2 for use
         ADD     R2, R0, #0      ;
-        AND     R1, R1, #0      ; Reset R1 for divisor (2)
-        ADD     R1, R1, #2      ; Set divisor to 2
-        ADD     R6, R6, #-1     ; Save return address for MOD subroutine
-        STR     R7, R6, #0      ; Save R7 on the stack
-        JSR     MOD             ; Call MOD subroutine
-        LDR     R7, R6, #0      ; Restore return address
-        ADD     R6, R6, #1      ; Adjust stack pointer back
-        ADD     R0, R0, #0      ; Adjust R0 position in the stack
-        BRz     NO              ; If divisible by 2, not prime
-        AND     R0, R0, #0      ; Restore R0 from R2
+        AND     R1, R1, #0      ;   Reset R1 for divisor (2)
+        ADD     R1, R1, #2      ;   Set divisor to 2
+        ADD     R6, R6, #-1     ;   Save return address for MOD subroutine
+        STR     R7, R6, #0      ;   Save R7 on the stack
+        JSR     MOD             ;   Call MOD subroutine
+        LDR     R7, R6, #0      ;   Restore return address
+        ADD     R6, R6, #1      ;   Adjust stack pointer back
+        ADD     R0, R0, #0      ;   Adjust R0 position in the stack
+        BRz     NO              ;   If divisible by 2, not prime
+        AND     R0, R0, #0      ;   Restore R0 from R2
         ADD     R0, R2, #0      ;
 ;
 ;
 ; Setup for checking divisibility by numbers > 2
-        AND     R1, R1, #0      ; Reset R1
-        ADD     R1, R1, #3      ; Start with divisor 3
+        AND     R1, R1, #0      ;   Reset R1
+        ADD     R1, R1, #3      ;   Start with divisor 3
 ;
 ;
 ; sqrt check
