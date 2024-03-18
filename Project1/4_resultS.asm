@@ -3,6 +3,7 @@
 ;
 ;   input: R0 - the number to check
 ;
+;
 resultS ADD     R0, R0, #0
         BRz     resSN
         LEA     R0, resP
