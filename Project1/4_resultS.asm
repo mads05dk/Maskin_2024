@@ -1,4 +1,5 @@
-;   displays on the console, whether the given argument is prime or not
+;
+;   Function to take in 0 or 1 and output whether it is prime
 ;
 ;   input: R0 - the number to check
 ;
