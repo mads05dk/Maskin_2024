@@ -42,70 +42,70 @@ isPrime ; Stack preparation for saving registers
 ;
 ;
 ; sqrt check
-checkP  AND     R2, R2, #0      ;   temp storage for R0
+checkP  AND     R2, R2, #0      ;   Temp storage for R0
         ADD     R2, R0, #0      ;
-        AND     R3, R3, #0      ;   temp storage for R1
+        AND     R3, R3, #0      ;   Temp storage for R1
         ADD     R3, R1, #0      ;
         AND     R0, R0, #0      ;
         ADD     R0, R1, #0      ;
-        ADD     R6, R6, #-1     ;   store R7 (ret pointer)
-        STR     R7, R6, #0      ;   onto the stack
-        JSR     MUL             ;   check if sqrt(R1) < R0 by multiplying it by itself, and adding it to R0 (temp in R2), and checking if negative
-        LDR     R7, R6, #0      ;   restore R7 (ret pointer)
-        ADD     R6, R6, #1      ;   from the stack
+        ADD     R6, R6, #-1     ;   Store R7 (ret pointer)
+        STR     R7, R6, #0      ;   Onto the stack
+        JSR     MUL             ;   Check if sqrt(R1) < R0 by multiplying it by itself, and adding it to R0 (temp in R2), and checking if negative
+        LDR     R7, R6, #0      ;   Restore R7 (ret pointer)
+        ADD     R6, R6, #1      ;   From the stack
         NOT     R0, R0          ;
         ADD     R0, R0, #1      ;
         ADD     R0, R2, R0      ;
         BRn     YES             ;
-        AND     R0, R0, #0      ;   restore R0 from R2
+        AND     R0, R0, #0      ;   Restore R0 from R2
         ADD     R0, R2, #0      ;
-        AND     R1, R1, #0      ;   restore R1 from R3
+        AND     R1, R1, #0      ;   Restore R1 from R3
         ADD     R1, R3, #0      ;
 ;
 ;
 ; mod check
-        ADD     R6, R6, #-1     ;   store R7 (ret pointer)
-        STR     R7, R6, #0      ;   onto the stack
+        ADD     R6, R6, #-1     ;   Store R7 (ret pointer)
+        STR     R7, R6, #0      ;   Onto the stack
         JSR     MOD             ;
-        LDR     R7, R6, #0      ;   restore R7 (ret pointer)
-        ADD     R6, R6, #1      ;   from the stack
+        LDR     R7, R6, #0      ;   Restore R7 (ret pointer)
+        ADD     R6, R6, #1      ;   Rrom the stack
         ADD     R0, R0, #0      ;
         BRz     NO              ;
-        AND     R0, R0, #0      ;   restore R0 from R2 (mod changed it)
+        AND     R0, R0, #0      ;   Restore R0 from R2 (mod changed it)
         ADD     R0, R2, #0      ;
-        AND     R1, R1, #0      ;   restore R1 from R3 (mod could change it)
+        AND     R1, R1, #0      ;   Restore R1 from R3 (mod could change it)
         ADD     R1, R3, #0      ;
-        ADD     R1, R1, #2      ;   add 2
+        ADD     R1, R1, #2      ;   Add 2
         BRnzp   checkP          ;
 ;
 ;
-NO      AND     R0, R0, #0      ; Set R0 to 0, number is not prime
-        BRnzp   RESTORE         ; Go to register restoration
+NO      AND     R0, R0, #0      ;   Set R0 to 0, number is not prime
+        BRnzp   RESTORE         ;   Go to register restoration
 ;
 ;
-YES     AND     R0, R0, #0      ; Clear R0 for setting result
-        ADD     R0, R0, #1      ; Set R0 to 1, number is prime
+YES     AND     R0, R0, #0      ;   Clear R0 for setting result
+        ADD     R0, R0, #1      ;   Set R0 to 1, number is prime
 ;
 ;
 ; Restore registers from the stack before returning
-RESTORE LDR     R3, R6, #0      ;   restore R3
-        ADD     R6, R6, #1      ;   from the stack
-        LDR     R2, R6, #0      ;   restore R2
-        ADD     R6, R6, #1      ;   from the stack
-        LDR     R1, R6, #0      ;   restore R1
-        ADD     R6, R6, #1      ;   from the stack
-        RET                     ; Return from subroutine
+RESTORE LDR     R3, R6, #0      ;   Restore R3
+        ADD     R6, R6, #1      ;   From the stack
+        LDR     R2, R6, #0      ;   Restore R2
+        ADD     R6, R6, #1      ;   From the stack
+        LDR     R1, R6, #0      ;   Restore R1
+        ADD     R6, R6, #1      ;   From the stack
+        RET                     ;   Return from subroutine
                                 ;
-                                ; multiply function
-                                ; R0 = first number
-                                ; R1 = second number
-MUL     ; if R1 is 0, return R1
+                                ;   Multiply function
+                                ;   R0 = first number
+                                ;   R1 = second number
+MUL                             ;   Check if R1 is 0. If it is, return R1
         ADD     R1, R1, #0      ;
         BRz     endMZ           ;
 ; save registers
-        ADD     R6, R6, #-1     ;   store R2
-        STR     R2, R6, #0      ;   onto the stack
-        AND     R2, R2, #0      ;   load R0 into R2
+        ADD     R6, R6, #-1     ;   Store R2
+        STR     R2, R6, #0      ;
+        AND     R2, R2, #0      ;   Load R0 into R2
         ADD     R2, R0, #0      ;
         AND     R0, R0, #0      ;
 ;
@@ -116,8 +116,8 @@ repMUL  ADD     R0, R0, R2      ;
 ;
 ;
 ; restore registers
-        LDR     R2, R6, #0      ;   restore R2
-        ADD     R6, R6, #1      ;   from the stack
+        LDR     R2, R6, #0      ;   Restore R2
+        ADD     R6, R6, #1      ;
         RET                     ;
 ;
 ;
@@ -140,4 +140,4 @@ repM    ADD     R0, R0, R1      ;
         RET                     ;
 ;
 ;
-US_S    .FILL   xFE00       ; the stack pointer
+US_S    .FILL   xFE00           ;   The stack pointer
