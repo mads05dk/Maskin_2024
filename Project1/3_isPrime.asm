@@ -1,10 +1,10 @@
-;  
+;
 ;       function to check if a given number is a prime number
 ;
 ;       input: R0 - the number to check
 ;       output: R0 - 0 if not prime, 1 if prime
 ;
-isPrime ;save registers
+isPrime ;save and create registers
         ADD     R6, R6, #-1     ;   store R1 (modulo argument)
         STR     R1, R6, #0      ;   onto the stack
         ADD     R6, R6, #-1     ;   store R2 (storage)
