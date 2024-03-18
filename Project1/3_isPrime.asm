@@ -4,42 +4,41 @@
 ;       input: R0 - the number to check
 ;       output: R0 - 0 if not prime, 1 if prime
 ;
-isPrime ;save and create registers
-        ADD     R6, R6, #-1     ;   store R1 (modulo argument)
-        STR     R1, R6, #0      ;   onto the stack
-        ADD     R6, R6, #-1     ;   store R2 (storage)
-        STR     R2, R6, #0      ;   onto the stack
-        ADD     R6, R6, #-1     ;   store R3 (storage)
-        STR     R3, R6, #0      ;   onto the stack
+isPrime ; Stack preparation for saving registers
+        ADD     R6, R6, #-1     ;   Create R1 (modulo argument)
+        STR     R1, R6, #0      ;   Store in the stack
+        ADD     R6, R6, #-1     ;   Create R2 (storage)
+        STR     R2, R6, #0      ;   Store in the stack
+        ADD     R6, R6, #-1     ;   Create R3 (storage)
+        STR     R3, R6, #0      ;   Store in the stack
 ;
 ;
-; check if R0 is 2 (prime) - or is less than 2 (not prime)
-        ADD     R0, R0, #-2     ;   check if R0
-        BRz     YES             ;   is equal to 2
-        ADD     R0, R0, #0      ;
-        BRn     NO              ;
-        ADD     R0, R0, #2      ;   restore R0
+        ; Special checks for numbers less than 2 and equal to 2
+        ADD     R0, R0, #-2     ; Adjust R0 to check for value 2
+        BRz     YES             ; If R0 was 2, it's prime
+        BRn     NO              ; If less than 2, it's not prime
+        ADD     R0, R0, #2      ; Restore original R0 value
 ;
 ;
-; check mod-2 of R0
-        AND     R2, R2, #0      ;   store R0 into R2 (modulo will change it)
+        ; Divisibility by 2 check excluding the number 2 itself
+        AND     R2, R2, #0      ; Reset R2 for use
         ADD     R2, R0, #0      ;
-        AND     R1, R1, #0      ;   set second argument to 2
-        ADD     R1, R1, #2      ;
-        ADD     R6, R6, #-1     ;   store R7 (ret pointer)
-        STR     R7, R6, #0      ;   onto the stack
-        JSR     MOD             ;
-        LDR     R7, R6, #0      ;   restore R7 (ret pointer)
-        ADD     R6, R6, #1      ;   from the stack
-        ADD     R0, R0, #0      ;
-        BRz     NO              ;   if we can divide by 2, and we already checked that it's not 2, we return no
-        AND     R0, R0, #0      ;   restore R0 from R2
+        AND     R1, R1, #0      ; Reset R1 for divisor (2)
+        ADD     R1, R1, #2      ; Set divisor to 2
+        ADD     R6, R6, #-1     ; Save return address for MOD subroutine
+        STR     R7, R6, #0      ; Save R7 on the stack
+        JSR     MOD             ; Call MOD subroutine
+        LDR     R7, R6, #0      ; Restore return address
+        ADD     R6, R6, #1      ; Adjust stack pointer back
+        ADD     R0, R0, #0      ; Adjust R0 position in the stack
+        BRz     NO              ; If divisible by 2, not prime
+        AND     R0, R0, #0      ; Restore R0 from R2
         ADD     R0, R2, #0      ;
 ;
 ;
-; check if prime number
-        AND     R1, R1, #0      ;   initialize R1 to 3
-        ADD     R1, R1, #3      ;
+; Setup for checking divisibility by numbers > 2
+        AND     R1, R1, #0      ; Reset R1
+        ADD     R1, R1, #3      ; Start with divisor 3
 ;
 ;
 ; sqrt check
@@ -80,21 +79,23 @@ checkP  AND     R2, R2, #0      ;   temp storage for R0
         BRnzp   checkP          ;
 ;
 ;
-NO      AND     R0, R0, #0      ;
-        BRnzp   RESTORE         ;
+NO      AND     R0, R0, #0      ; Set R0 to 0, number is not prime
+        BRnzp   RESTORE         ; Go to register restoration
 ;
 ;
-YES     AND     R0, R0, #0      ;
-        ADD     R0, R0, #1      ;
+YES     AND     R0, R0, #0      ; Clear R0 for setting result
+        ADD     R0, R0, #1      ; Set R0 to 1, number is prime
 ;
 ;
+; Restore registers from the stack before returning
 RESTORE LDR     R3, R6, #0      ;   restore R3
         ADD     R6, R6, #1      ;   from the stack
         LDR     R2, R6, #0      ;   restore R2
         ADD     R6, R6, #1      ;   from the stack
         LDR     R1, R6, #0      ;   restore R1
         ADD     R6, R6, #1      ;   from the stack
-        RET                     ;
+        RET                     ; Return from subroutine
+
 ;
 ;
 ; multiply function
