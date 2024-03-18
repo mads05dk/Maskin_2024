@@ -1,8 +1,10 @@
 ;   Functon that finds the middle between two numbers
 ;
+;
 .ORIG x3000
         LD      R0,A        ; Loads R0 as A
         LD      R1,B        ; Loads R1 as B
+;
 ;
 X       Not     R2,R0       ;Makes RO negative into R2
         ADD     R2,R2,#1    ;Add 1 into R0
@@ -12,6 +14,7 @@ X       Not     R2,R0       ;Makes RO negative into R2
         ADD     R0,R0,#1    ;Increment R0
         BRnzp   X           ;loops infinitely to x
 DONE    ST      R1,C        ;Stores R1 in C
+;
 ;
         TRAP    x25         ;Halts execution
 A       .BLKW   1           ;Input 1 character
