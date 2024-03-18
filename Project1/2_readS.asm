@@ -10,15 +10,17 @@ readS   ; Save registers R1-R5 on the stack
         STR     R3, R6, #2      ;   Store R3 at R6 + offset 2
         STR     R4, R6, #1      ;   Store R4 at R6 + offset 1
         STR     R5, R6, #0      ;   Store R5 at R6 + offset 0
-
-; Initialize registers
+;
+;       
+        ; Initialize registers
         AND     R1, R1, #0      ;   Clear R1 through R5
         AND     R2, R2, #0      ;
         AND     R3, R3, #0      ;
         AND     R4, R4, #0      ;
         AND     R5, R5, #0      ;
 ;
-; prints console initial output
+;
+        ; prints console initial output
         LEA     R0, PROMPT      ;   Load prompt string into R0
         TRAP    x22             ;   Print to console
         LD      R0, NEWLINE     ;   Load a newline into R0
@@ -36,7 +38,7 @@ READ    AND     R0, R0, #0      ;
 LoadR2  ADD     R2, R0, #0      ;
 ; 
 ;
-;print the numbers
+        ;print the numbers
         AND     R0, R0, #0      ;
         ADD     R0, R1, #0      ;
         TRAP    x21             ;   print
@@ -47,7 +49,7 @@ LoadR2  ADD     R2, R0, #0      ;
         TRAP    x21             ;
 ;
 ;
-; change the numbers to decimals
+        ; change the numbers to decimals
         LD      R5, ASCII       ;
         NOT     R5, R5          ;
         ADD     R5, R5, #1      ;
@@ -78,13 +80,13 @@ END     ADD     R0, R0, R2      ;   restore registers from the stack
         RET                     ;
 ;
 ;
-; multiply function
-; R0 = first number
-; R1 = second number
+                                ; multiply function
+                                ; R0 = first number
+                                ; R1 = second number
 MUL     ; if R1 is 0, return R1
         ADD     R1, R1, #0      ;
         BRz     endMZ           ;
-; save registers
+        ; save registers
         ADD     R6, R6, #-1     ;   store R2
         STR     R2, R6, #0      ;   onto the stack
         AND     R2, R2, #0      ;   load R0 into R2
@@ -97,7 +99,7 @@ repMUL  ADD     R0, R0, R2      ;
         BRp     repMUL          ;
 ;
 ;
-; restore registers
+        ; restore registers
         LDR     R2, R6, #0      ;   restore R2
         ADD     R6, R6, #1      ;   from the stack
         RET                     ;

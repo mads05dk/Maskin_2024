@@ -36,12 +36,12 @@ isPrime ; Stack preparation for saving registers
         ADD     R0, R2, #0      ;
 ;
 ;
-; Setup for checking divisibility by numbers > 2
+        ; Setup for checking divisibility by numbers > 2
         AND     R1, R1, #0      ;   Reset R1
         ADD     R1, R1, #3      ;   Start with divisor 3
 ;
 ;
-; sqrt check
+        ; sqrt check
 checkP  AND     R2, R2, #0      ;   Temp storage for R0
         ADD     R2, R0, #0      ;
         AND     R3, R3, #0      ;   Temp storage for R1
@@ -63,7 +63,7 @@ checkP  AND     R2, R2, #0      ;   Temp storage for R0
         ADD     R1, R3, #0      ;
 ;
 ;
-; mod check
+        ; mod check
         ADD     R6, R6, #-1     ;   Store R7 (ret pointer)
         STR     R7, R6, #0      ;   Onto the stack
         JSR     MOD             ;
@@ -87,7 +87,7 @@ YES     AND     R0, R0, #0      ;   Clear R0 for setting result
         ADD     R0, R0, #1      ;   Set R0 to 1, number is prime
 ;
 ;
-; Restore registers from the stack before returning
+        ; Restore registers from the stack before returning
 RESTORE LDR     R3, R6, #0      ;   Restore R3
         ADD     R6, R6, #1      ;   From the stack
         LDR     R2, R6, #0      ;   Restore R2
@@ -96,13 +96,16 @@ RESTORE LDR     R3, R6, #0      ;   Restore R3
         ADD     R6, R6, #1      ;   From the stack
         RET                     ;   Return from subroutine
                                 ;
+                                ;
                                 ;   Multiply function
                                 ;   R0 = first number
                                 ;   R1 = second number
 MUL                             ;   Check if R1 is 0. If it is, return R1
         ADD     R1, R1, #0      ;
         BRz     endMZ           ;
-; save registers
+;
+;        
+        ; save registers
         ADD     R6, R6, #-1     ;   Store R2
         STR     R2, R6, #0      ;
         AND     R2, R2, #0      ;   Load R0 into R2
@@ -115,7 +118,7 @@ repMUL  ADD     R0, R0, R2      ;
         BRp     repMUL          ;
 ;
 ;
-; restore registers
+        ; restore registers
         LDR     R2, R6, #0      ;   Restore R2
         ADD     R6, R6, #1      ;
         RET                     ;
@@ -126,11 +129,11 @@ endMZ   AND     R0, R0, #0      ;
         RET                     ;
 ;
 ;
-; takes modulo of two arguments, R0 and R1
-; returns 0 if mod-R1 = 0, else returns
-; a negative number
-; you COULD add R1 back to R0 to get the rest
-; aka. a correct modulo
+                                ; takes modulo of two arguments, R0 and R1
+                                ; returns 0 if mod-R1 = 0, else returns
+                                ; a negative number
+                                ; you COULD add R1 back to R0 to get the rest
+                                ; aka. a correct modulo
 ;
 ;
 MOD     NOT     R1, R1          ;
