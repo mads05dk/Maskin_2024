@@ -11,7 +11,8 @@ resSP   TRAP    x22
         LD      R0, NEWLINE
         TRAP    x21
         RET
-
+;
+;
 NEWLINE .FILL x000A
 resP    .STRINGZ "The number is prime"
 resNP   .STRINGZ "The number is not prime"
