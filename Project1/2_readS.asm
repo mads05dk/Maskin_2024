@@ -39,6 +39,7 @@ READ    AND     R0, R0, #0
         BRnzp   READ
 LoadR2  ADD     R2, R0, #0
 ; 
+;
 ;print the numbers
         AND     R0, R0, #0
         ADD     R0, R1, #0
@@ -48,6 +49,7 @@ LoadR2  ADD     R2, R0, #0
         TRAP    x21             ;   print
         LD      R0, NEWLINE     ;   newline after both digits are printed
         TRAP    x21
+;
 ;
 ; change the numbers to decimals
         LD      R5, ASCII
@@ -79,6 +81,7 @@ END     ADD     R0, R0, R2
         ADD     R6, R6, #1
         RET
 ;
+;
 ; multiply function
 ; R0 = first number
 ; R1 = second number
@@ -88,25 +91,29 @@ MUL     ; if R1 is 0, return R1
 ; save registers
         ADD     R6, R6, #-1 ;   store R2
         STR     R2, R6, #0  ;   onto the stack
-;
         AND     R2, R2, #0  ;   load R0 into R2
         ADD     R2, R0, #0
         AND     R0, R0, #0
 ;
+;
 repMUL  ADD     R0, R0, R2
         ADD     R1, R1, #-1
         BRp     repMUL
+;
 ;
 ; restore registers
         LDR     R2, R6, #0  ;   restore R2
         ADD     R6, R6, #1  ;   from the stack
         RET
 ;
+;
 endMZ   AND     R0, R0, #0
         ADD     R0, R1, #0
         RET
 ;
+;
 ; -------------------------- precompile variables -------------------------- ;
+;
 ;
 NEWLINE .FILL x000A
 ASCII   .FILL x0030
