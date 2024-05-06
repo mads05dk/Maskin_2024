@@ -171,13 +171,14 @@ int addCardsToDeck(Card *cards) {
                     prev->next = cardNode;
                     cardNode->prev = prev;
                 }
-//                printf("Added card to column %d!\n"
-//                       "Cardnum: %d\n"
-//                       "Head = Num: %d - Suit: %d\n"
-//                       "Newcard = Num: %d - Suit: %d\n\n",
-//                       i+1, cardNum+1,
-//                       columns[i]->card->number, columns[i]->card->suit,
-//                       cardNode->card->number, cardNode->card->suit);
+                #ifdef DEBUG printf("Added card to column %d!\n"
+                       "Cardnum: %d\n"
+                       "Head = Num: %d - Suit: %d\n"
+                       "Newcard = Num: %d - Suit: %d\n\n",
+                       i+1, cardNum+1,
+                       columns[i]->card->number, columns[i]->card->suit,
+                       cardNode->card->number, cardNode->card->suit);
+                #endif
                 cardNum++;
             }
             else {
