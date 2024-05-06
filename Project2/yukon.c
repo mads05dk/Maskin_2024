@@ -147,48 +147,31 @@ int addLinkedListCardsToDeck(CardNode *cards) {
 }
 
 int addCardsToDeck(Card *cards) {
-    int cardNum = 0;
-    while (cardNum < 52) {
-        for (int i = 0; i < 7; i++) {
-            if (cardNum < 52) {
-                CardNode *cardNode = malloc(sizeof(CardNode));
-                if (cardNode == NULL) {
-                    return -1;
-                }
-                cardNode->next = NULL;
-                cardNode->prev = NULL;
-                cardNode->card = &cards[cardNum];
-                if (!columns[i]) {
-                    columns[i] = cardNode;
-                }
-                else {
-                    CardNode *next = columns[i]->next;
-                    CardNode *prev = columns[i];
-                    while (next) {
-                        prev = next;
-                        next = next->next;
-                    }
-                    prev->next = cardNode;
-                    cardNode->prev = prev;
-                }
-                #ifdef DEBUG printf("Added card to column %d!\n"
-                       "Cardnum: %d\n"
-                       "Head = Num: %d - Suit: %d\n"
-                       "Newcard = Num: %d - Suit: %d\n\n",
-                       i+1, cardNum+1,
-                       columns[i]->card->number, columns[i]->card->suit,
-                       cardNode->card->number, cardNode->card->suit);
-                #endif
-                cardNum++;
+    for (int i = 0; i < 7; i++) {
+        CardNode *last = columns[i];
+        while (last && last->next) {
+            last = last->next;
+        }
+
+        for (int cardNum = i; cardNum < 52; cardNum += 7) {
+            CardNode *newNode = malloc(sizeof(CardNode));
+            if (newNode == NULL) {
+                return -1; // Memory allocation failed
             }
-            else {
-                break;
+            newNode->card = &cards[cardNum];
+            newNode->next = NULL;
+            newNode->prev = last;
+            if (last) {
+                last->next = newNode;
+            } else {
+                columns[i] = newNode;
             }
+            last = newNode;
         }
     }
-
     return 200;
 }
+
 
 
 // function to check if card from one column can move onto other column
